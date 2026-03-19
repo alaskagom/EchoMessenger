@@ -77,17 +77,6 @@
             txtm.Text = "(여기에 입력하세요)";
             txtm.TextChanged += textBox1_TextChanged;
             // 
-            // labelCount
-            // 
-            labelCount = new Label();
-            labelCount.AutoSize = true;
-            labelCount.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            labelCount.Location = new Point(38, 420);
-            labelCount.Name = "labelCount";
-            labelCount.Size = new Size(120, 20);
-            labelCount.TabIndex = 4;
-            labelCount.Text = "현재대화: 0개";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -95,7 +84,6 @@
             ClientSize = new Size(800, 450);
             Controls.Add(txtm);
             Controls.Add(LSTB);
-            Controls.Add(labelCount);
             Controls.Add(label1);
             Controls.Add(bnt);
             Name = "Form1";
@@ -110,6 +98,5 @@
         private Label label1;
         private ListBox LSTB;
         private TextBox txtm;
-        private Label labelCount;
     }
 }

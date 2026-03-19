@@ -5,17 +5,10 @@ namespace EchoMessenger
         public Form1()
         {
             InitializeComponent();
-            // Ensure initial count is correct
-            UpdateMessageCount();
-            // Clear placeholder on first click/focus
-            txtm.GotFocus += Txtm_GotFocus;
-        }
-
-        private void Txtm_GotFocus(object? sender, EventArgs e)
-        {
-            if (txtm.Text == "(여기에 입력하세요)")
-                txtm.Clear();
-            txtm.GotFocus -= Txtm_GotFocus;
+            // Make the Enter key trigger the send button and set initial focus to the input
+            AcceptButton = bnt;
+            txtm.Focus();
+            txtm.KeyDown += Txtm_KeyDown;
         }
 
         private void LSTB_SelectedIndexChanged(object sender, EventArgs e)
@@ -25,27 +18,27 @@ namespace EchoMessenger
 
         private void bnt_Click(object sender, EventArgs e)
         {
-            // Trim whitespace
+            // Prevent sending empty or whitespace-only messages
             string typed_msg = txtm.Text.Trim();
             if (string.IsNullOrEmpty(typed_msg))
             {
-                // Do not add empty messages
+                txtm.Focus();
                 return;
             }
 
-            // Prepend timestamp in format [HH:mm:ss]
-            string stamped = $"[{DateTime.Now:HH:mm:ss}] {typed_msg}";
-            LSTB.Items.Add(stamped);
+            LSTB.Items.Add(typed_msg);
             txtm.Clear();
-
-            UpdateMessageCount();
+            txtm.Focus();
         }
 
-        private void UpdateMessageCount()
+        private void Txtm_KeyDown(object? sender, KeyEventArgs e)
         {
-            int count = LSTB.Items.Count;
-            // labelCount is added in designer
-            labelCount.Text = $"현재대화: {count}개";
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Suppress the ding and trigger the send action
+                e.SuppressKeyPress = true;
+                bnt.PerformClick();
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
